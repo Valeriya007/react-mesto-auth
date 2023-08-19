@@ -17,7 +17,7 @@ export default function Register({ onRegister }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        onRegister({ email, password });
+        onRegister(email, password);
 
     }
 
