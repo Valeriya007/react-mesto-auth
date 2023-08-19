@@ -15,7 +15,7 @@ export default function Login({ onLogin }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        onLogin({ email, password });
+        onLogin(email, password);
 
     }
 
