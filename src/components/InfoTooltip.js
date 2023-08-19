@@ -3,7 +3,7 @@ import React from "react";
 export default function InfoTooltip({ name, isOpen, isSuccess, onClose }) {
     return (
         <section className={`popup popup_${name} ${isOpen ? 'popup_opened' : ''}`}>
-            <div className="popup__container">
+            <div className="popup__container popup__container_type_infotooltip">
                 <div className={`popup__success 
                     ${isSuccess
                         ?
