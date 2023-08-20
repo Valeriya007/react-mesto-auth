@@ -11,8 +11,8 @@ export function register(email, password) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            email,
-            password
+            email: email,
+            password: password
         })
     })
         .then((res) => getResponse(res))
@@ -25,8 +25,8 @@ export function login(email, password) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            email,
-            password
+            email: email,
+            password: password
         })
     })
         .then((res) => getResponse(res))

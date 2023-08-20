@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-export default function FormValidation() {
+export default function useFormValidation() {
     const [values, setValues] = useState({})
     const [errors, setErrors] = useState({})
     const [isValid, setIsValid] = useState(false)
@@ -11,7 +11,7 @@ export default function FormValidation() {
         const value = e.target.value
         const validationMessage = e.target.validationMessage
         const valid = e.target.validity.valid
-        const form =  e.target.form
+        const form = e.target.form
 
         setValues((Values) => {
             return { ...Values, [name]: value }
@@ -28,7 +28,7 @@ export default function FormValidation() {
         setIsValid(form.checkValidity())
     }
 
-    function reset(data={}) {
+    function reset(data = {}) {
         setValues(data)
         setErrors({})
         setIsValid(false)
@@ -38,7 +38,7 @@ export default function FormValidation() {
     const setValue = useCallback((name, value) => {
         setValues((Values) => {
             return { ...Values, [name]: value }
-        }) 
+        })
     }, [])
 
     return { values, errors, isValid, isInputValid, handleChange, reset, setValue }
