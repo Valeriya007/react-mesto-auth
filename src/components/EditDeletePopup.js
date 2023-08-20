@@ -1,10 +1,10 @@
 import PopupWithForm from "./PopupWithForm";
 
-export default function EditDeletePopup({ isOpen, onClose, onSubmit, card }) {
+export default function EditDeletePopup({ isOpen, onClose, onSubmit }) {
 
     function handleSubmit(evt) {
-        evt.preventDefault();
-        onSubmit(card);
+        evt.preventDefault()
+        onSubmit()
     }
 
     return (

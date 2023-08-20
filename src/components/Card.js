@@ -12,7 +12,7 @@ export default function Card({ card, onCardClick, onCardDelete }) {
   }
 
   function handleDeleteClick() {
-    onCardDelete({ link: card.link, name: card.name })
+    onCardDelete(card._id)
   }
 
 

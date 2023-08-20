@@ -14,8 +14,6 @@ import Login from "./Login.js";
 import Register from "./Register.js";
 import ProtectedRoute from "./ProtectedRoute.js";
 
-import PopupWithForm from "./PopupWithForm.js";
-
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
@@ -34,12 +32,10 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
-  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false)
   const [isInfoTooltipPopup, setIsInfoTooltipPopup] = useState(false)
-  const [selectedCard, setSelectedCard] = useState({
-    name: '',
-    link: ''
-  })
+  const [isDeletePopupOpen, setDeletePopupOpen] = useState(false)
+  const [selectedCard, setSelectedCard] = useState({})
+  const [isImgPopup, setImgPopup] = useState(false)
 
   //стейт карточки
   const [cards, setCards] = useState([])
@@ -56,7 +52,8 @@ function App() {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
-    setIsDeletePopupOpen(false)
+    setDeletePopupOpen(false)
+    setImgPopup(false)
     setIsInfoTooltipPopup(false)
     setSelectedCard({
       name: '',
@@ -78,13 +75,14 @@ function App() {
     setIsEditAvatarPopupOpen(true)
   }
 
-  function handleCardClick({ name, link }) {
-    setSelectedCard({ name, link })
+  function handleCardClick(card) {
+    setSelectedCard(card)
+    setImgPopup(true)
   }
 
   function handleDeletePopupClick(cardId) {
     setDeleteCardId(cardId)
-    setIsDeletePopupOpen(true)
+    setDeletePopupOpen(true)
   }
 
   //начальный запрос на сервер
@@ -203,12 +201,13 @@ function App() {
 
   //обработчик удаления карточки
 
-  function handleCardDelete(card) {
-    api.deleteCard(card._id)
+  function handleCardDelete() {
+    api.deleteCard(deleteCardId)
       .then(() => {
         setCards((cards) =>
           cards.filter((item) =>
-            item._id !== card._id))
+            item._id !== deleteCardId))
+        closeAllPopups()
       })
       .catch((error => console.error(`Ошибка удаления карточки ${error}`)))
   }
@@ -275,10 +274,10 @@ function App() {
           isOpen={isDeletePopupOpen}
           onClose={closeAllPopups}
           onSubmit={handleCardDelete}
-          card={deleteCardId}
         />
         <ImagePopup
           card={selectedCard}
+          isOpen={isImgPopup}
           onClose={closeAllPopups}
         />
         <InfoTooltip
