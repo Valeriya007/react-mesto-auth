@@ -1,8 +1,7 @@
-import FormValidation from "../utils/useFormValidation";
 import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import { useContext, useEffect } from "react";
-import useFormValidation from "../utils/useFormValidation";
+import useFormValidation from "../utils/FormValidation";
 
 
 export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
