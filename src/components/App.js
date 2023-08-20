@@ -20,6 +20,7 @@ import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
 import ImagePopup from "./ImagePopup.js";
+import EditDeletePopup from "./EditDeletePopup.js";
 import InfoTooltip from "./InfoTooltip.js";
 
 
@@ -33,6 +34,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false)
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false)
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false)
   const [isInfoTooltipPopup, setIsInfoTooltipPopup] = useState(false)
   const [selectedCard, setSelectedCard] = useState({
     name: '',
@@ -41,6 +43,7 @@ function App() {
 
   //стейт карточки
   const [cards, setCards] = useState([])
+  const [deleteCardId, setDeleteCardId] = useState("");
 
   //стейты авторизации  
   const [loggedIn, setLoggedIn] = useState(false)
@@ -53,6 +56,7 @@ function App() {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
     setIsEditAvatarPopupOpen(false)
+    setIsDeletePopupOpen(false)
     setIsInfoTooltipPopup(false)
     setSelectedCard({
       name: '',
@@ -76,6 +80,11 @@ function App() {
 
   function handleCardClick({ name, link }) {
     setSelectedCard({ name, link })
+  }
+
+  function handleDeletePopupClick(cardId) {
+    setDeleteCardId(cardId)
+    setIsDeletePopupOpen(true)
   }
 
   //начальный запрос на сервер
@@ -224,7 +233,7 @@ function App() {
                 onAddPlace={handleAddPlaceClick}
                 onEditAvatar={handleEditAvatarClick}
                 onCardClick={handleCardClick}
-                onCardDelete={handleCardDelete}
+                onCardDelete={handleDeletePopupClick}
                 cards={cards}
               />
             }
@@ -262,10 +271,11 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
         />
-        <PopupWithForm
-          name='delete'
-          title='Вы уверены?'
-          button='Да'
+        <EditDeletePopup
+          isOpen={isDeletePopupOpen}
+          onClose={closeAllPopups}
+          onSubmit={handleCardDelete}
+          card={deleteCardId}
         />
         <ImagePopup
           card={selectedCard}
